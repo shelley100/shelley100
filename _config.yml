@@ -1,0 +1,82 @@
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
+
+# Setup
+title:            Shelley100.com
+tagline:          Shelley's Views and Thoughts
+bangla_tagline: শেলীর চিন্তা ও চেতনা
+url:              http://localhost:4000
+description: "Shelley's Views and Thoughts"
+keywords: "shelley, bangla, bangalee, bengali, bangladesh, bangladeshi, dhaka, bangla politics, philosophy, education, religion, blog, bangla blog"
+paginate:         5
+baseurl:          /
+author:
+  name:           Rahamatullah Shelley
+  url:            https://twitter.com/akrbd1984
+  email:          akrbd@yahoo.com
+
+# Custom vars
+version:          1.0.0
+github:
+  repo:           https://github.com/shelley100/shelley100
+
+
+#pages list for archived page
+pages_list:       
+  About: '/about'
+  Archive: '/archive'
+  Categories: '/categories'
+  Tags: '/tags'
+  Feed: '/atom.xml'
+  Advertisement: '/advertisement'
+
+#directory setup
+category_dir: 'cat-dir'
+tag_dir: 'tag-dir'
+yearly_archive_dir: 'yearly-archive'
+monthly_archive_dir: 'monthly-archive'
+sidebar_archive_dir: '_includes/sidebar-archive'
+
+ad_info:
+    top-banner: 'empty'
+
+gems:
+- jekyll-compass
+
+#external services info
+twitter_username: akrbd1984
+github_username:  shelley100
+disqus_shortname: freshman21
+
+
+# Settings for sharing 
+    # Sharing is for things like tweet, plusone, hn upvotes, like, linkedin
+    # Add a tweet button 		=> provider : tweet
+    # Add a like button 		=> provider : like (you also need a facebook appid)
+    # Add a plus one button 	=> provider : plusone
+    # Add a HN button 		=> provider : hn
+    # Add them all (i.e. hn + tweet + plusone + like) => provider : all
+    # Set 'provider' to the sharing provider you want to use.
+    # Set 'provider' to false to turn sharing off globally.
+    #
+sharing:
+   provider: all
+   twitter:
+      class: twitter-share-button
+      size: 90
+      via: akrbd1984
+      count: true
+   facebook:
+      appid: 123
+      layout: button_count
+      font:
+      faces: false
+      width: 90
+   googleplus:
+      size: medium
+      width:
+      annotation: bubble
+   linkedin:
+      counter : right      
+

@@ -1,0 +1,35 @@
+{% comment %}
+	# This file produce a cat line in index.html page under a post.
+	# It is also used in post.html for the same purpose.
+{% endcomment %}	
+
+{% if post.title %}
+	{% assign catsize = post.categories | size %}
+	{% assign categories = post.categories %}
+{% else %}
+	{% assign catsize = page.categories | size %}
+	{% assign categories = page.categories %}
+{% endif %}
+	
+		
+	{% if catsize > 1 %}
+		<span><strong><u>Categories:</u></strong>&nbsp;
+	{% else %}	
+		<span><strong><u>Category:</u></strong>&nbsp;
+	{% endif %}
+	
+	{% for singlecat in categories %}
+				
+		{% if singlecat != "" %}
+			{% if forloop.index > 1 %} 
+				<span>,&nbsp;</span>
+				<span><a href="{{ site.baseurl }}{{ site.category_dir }}/{{ singlecat }}">{{ singlecat }}</a></span>
+			{% else %}	
+				<span><a href="{{ site.baseurl }}{{ site.category_dir }}/{{ singlecat }}">{{ singlecat }}</a></span>
+			{%endif %}
+		{% else %}
+			<span>none</span>	
+		{% endif %}
+			
+	{% endfor %}		
+  </span>

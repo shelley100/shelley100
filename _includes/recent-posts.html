@@ -1,0 +1,12 @@
+<div class="sidebar-sec2">
+	<!-- <p class="h4 sidebar-sec-header"><strong><u>Recent Posts</u></strong></p> -->
+	<h3 class="sidebar-sec-header"><u>Recent Posts</u></h3>
+	<ul class="sidebar-sec-items" >
+    {% for post in site.posts | limit:10  %}
+         
+        <li class="sidebar-sec-item">
+            {{ post.date | date_to_string }} &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
+        </li>
+    {% endfor %} 
+	</ul>
+</div>
