@@ -1,0 +1,51 @@
+{% comment %}
+	As this file will be used as a include file,
+	we do not need any layout for it.
+	Finally this file is not used due to problem in 
+	conversion of data coming from plugin.
+{% endcomment %}	
+
+
+<h1>{{ page.title }}</h1>
+
+{% for year in page.data %}
+  <h2>{{ year[0] }}</h2>
+  <ul>
+  {% for hashes in year[1] %}
+    {% capture monthyear %}
+		{{ year[0] }}-{{ hashes['month'] }}({{hashes['count']}})
+	{% endcapture %}
+	
+    
+    {% case hashes['month'] %}
+		{% when 1 %}
+			<li>Jan-{{ year[0] }}== {{ hashes['count'] }}</li>
+		{% when 2 %}
+			<li>Feb-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 3 %}
+			<li>Mar-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 4 %}
+			<li>Apr-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 5 %}
+			<li>May-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 6 %}
+			<li>Jun-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 7 %}
+			<li>Jul-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 8 %}
+			<li>Aug-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 9 %}
+			<li>Sep-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 10 %}
+			<li>Oct-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 11 %}
+			<li>Nov-{{ year[0] }}=={{ hashes['count'] }}</li>
+		{% when 12 %}
+			<li>Dec-{{ year[0] }}=={{ hashes['count'] }}</li>
+	{% endcase %}
+    
+    
+    
+  {% endfor %}
+  </ul>
+{% endfor %}
