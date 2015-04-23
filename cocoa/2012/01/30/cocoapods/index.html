@@ -1,0 +1,2458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Cocoapods &middot; Shelley100.com
+    
+  </title>
+  <meta name="description" content="CocoapodsIn all of our apps, whether they are web-apps or iOS apps, we make extensive use of different frameworks. These help us to save time by abstracting ...">
+  <meta name="keywords" content="shelley, bangla, bangalee, bengali, bangladesh, bangladeshi, dhaka, bangla politics, philosophy, education, religion, blog, bangla blog">	
+  <!-- CSS -->
+     <!-- Bootstrap styles -->
+    <link href="/shelley100/assets/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional theme -->
+    <link href="/shelley100/assets/css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Sticky Footer -->
+    <link href="/shelley100/assets/css/bootstrap/css/bs-sticky-footer.css" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link href="/shelley100/assets/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+	
+  <!--
+  <link rel="stylesheet" href="/shelley100/assets/css/poole.css">-->
+  <link rel="stylesheet" href="/shelley100/assets/css/syntax.css">
+  <link rel="stylesheet" href="/shelley100/css/mains.css"> 	
+  <link rel="stylesheet" href="/shelley100/css/social.css"> 	
+  <link rel="stylesheet" href="/shelley100/css/css-social2.css">
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/shelley100/assets/images/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/shelley100/assets/images/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Shelley100.com" href="/shelley100/atom.xml">
+  <!-- fb -->
+<meta property="og:title" content="Cocoapods" />
+<meta property="og:url" content="/cocoa/2012/01/30/cocoapods/" />
+<meta property="og:image" content="/shelley100assets/images/socialicon120.png" />
+<meta property="og:description" content="&lt;h3 id=&quot;cocoapods&quot;&gt;Cocoapods&lt;/h3&gt;
+&lt;p&gt;In all of our apps, whether they are web-apps or iOS apps, we make extensive use of different frameworks. These help us to save time by abstracting out stuff that’s needed in a lot of different projects.&lt;/p&gt;
+
+&lt;p&gt;We also maintain some of our own frameworks:
+* &lt;a href=&quot;https://github.com/pjaspers/tin&quot;&gt;Tin&lt;/a&gt; Makes consuming webservices in iOS a lot easier.
+* &lt;a href=&quot;https://github.com/pjaspers/coby&quot;&gt;Coby&lt;/a&gt; Adds some functionality we know and love from Ruby into several default Obj-C classes.&lt;/p&gt;
+
+&lt;p&gt;But these frameworks grow together with our projects, so copying these into several projects can become tedious and managing different versions would make things too complicated.&lt;/p&gt;
+
+&lt;p&gt;Ruby has &lt;a href=&quot;http://gembundler.com/&quot;&gt;Bundler&lt;/a&gt; to solve this problem. Just create a gemfile that lists every “gem” you use, Bundler will install these gems and keep track of the versions in the “Gemfile.lock”.&lt;/p&gt;
+
+&lt;p&gt;Now there is a similar system for Cocoa, called &lt;a href=&quot;https://github.com/CocoaPods/CocoaPods&quot;&gt;Cocoapods&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-cocoapods&quot;&gt;Installing cocoapods&lt;/h3&gt;
+&lt;p&gt;Cocoapods runs on macruby, so installing it using RVM is a breeze:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rvm install macruby&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then simply setup cocoapods like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rvm use macruby
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;macgem install cocoapods
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pod setup&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And now we’re ready to start using Cocoapods.&lt;/p&gt;
+
+&lt;h3 id=&quot;adding-cocoapods-to-a-project&quot;&gt;Adding Cocoapods to a project&lt;/h3&gt;
+&lt;p&gt;Using Cocoapods in a new project is quite similar to using Bundler in a rails project.
+We start by adding a Podfile which could look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;platform&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:ios&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;AFnetworking&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git://github.com/AFNetworking/AFNetworking.git&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Tin&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git://github.com/Reprazent/Tin.git&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:commit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;baf1c407f74dd6ca6c6c8c46bc0a3a565e79d3b6&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;coby&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git://github.com/pjaspers/coby.git&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;MagicalRecord&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The platform can either be &lt;code&gt;:ios&lt;/code&gt; or &lt;code&gt;:osx&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note that, just like with Bundler, you can specify a git repository, and even a commit or tag to reference your dependency. This makes it a lot easier to fix versions and avoid breaking the project when updating the dependencies.&lt;/p&gt;
+
+&lt;p&gt;The dependencies referencing a git repository must contain a “.podspec” file. When no repository is specified, Cocoapods looks for the podspec in &lt;a href=&quot;https://github.com/CocoaPods/Specs&quot;&gt;it’s own spec-repository&lt;/a&gt;. There’s already a bunch of frameworks that are available, and more are sure to follow.&lt;/p&gt;
+
+&lt;p&gt;Now we can enable Cocoapods for our project by running &lt;code&gt;pod install&lt;/code&gt; for the first time.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pod install demoproject.xcodeproj&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will clone the git repositories of the pods specified in a new “Pods” directory in your project root.
+Just like Bundler it will create a “Podfile.lock” which holds the references to the current version of the pods and its dependecies. Together with a new workspace we can use to open our project in XCode.
+There we will see that there are actually two projects added to the workspace.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/143q1S3e311O3m1O1X1q/Screen%20Shot%202012-01-05%20at%2021.06.36.png&quot; alt=&quot;screenshot workspace&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;One containing your regular project, and one containing the pods, this makes it easier to view the source code of these pods while working.&lt;/p&gt;
+
+&lt;p&gt;When building your project your pods will be built into “libPods.a” before building the project itself.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/0d2l0S2M2G3W28152F0m/Screen%20Shot%202012-01-05%20at%2021.15.14.png&quot; alt=&quot;screenshot libPods&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now you’re good to go. When adding new pods or updating existing ones in your podfile just run &lt;code&gt;pod install&lt;/code&gt; again to update your “Podfile.lock” and adding or updating the Pods.&lt;/p&gt;
+
+&lt;p&gt;When multiple build configurations are needed, we also need to add these in the “Pods.xcodeproj”.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/0y2L3A0l2e3N3F2u0e2R/Screen%20Shot%202012-01-05%20at%2021.18.30.png&quot; alt=&quot;screenshot build configuration&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You should also set “Skip Install” to yes in your build target in order to create archives for different build types.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/0i0O3P0o0R1N2w313U1L/Screen%20Shot%202012-01-05%20at%2021.32.44.png&quot; alt=&quot;screenshot skip install&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;thanks &lt;a href=&quot;/author/jelle/&quot;&gt;Verbeeckx&lt;/a&gt; for figuring these last two out&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-your-own-cocoapods&quot;&gt;Creating your own Cocoapods&lt;/h3&gt;
+
+&lt;p&gt;To be able to add our own frameworks into our own projects easily, we had to add a “.podspec” to the repos.
+These podspecs look very similar to the gemspecs in Ruby.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Pod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Tin&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;0.0.1&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;license&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;MIT&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Tin makes the internet easier in Cocoa.&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;homepage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://github.com/pjaspers/Tin&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pjaspers&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;piet@jaspe.rs&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;An optional longer description of Tin.&amp;#39;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://github.com/pjaspers/Tin.git&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;source_files&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Classes&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s1&quot;&gt;&amp;#39;Classes/**/*.{h,m}&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tin&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s2&quot;&gt;&amp;quot;*.{h,m}&amp;quot;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;JSONKit&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;AFNetworking&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;~&amp;gt; 0.8.0&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In this podspec we set the source, where Cocoapods can find the repository to clone.
+We specify where the required classes can be found within the repository.
+We can also set several dependencies, specifying the tags that should be used.&lt;/p&gt;
+
+&lt;p&gt;Note that adding a dependency like this, it needs to be present in the &lt;a href=&quot;https://github.com/CocoaPods/Specs&quot;&gt;spec repository&lt;/a&gt; of Cocoapods.
+When the correct tag or framework isn’t present in the repo yet, we can add it ourselves in the Podfile of the project we are using the framework in.
+In the case of Tin, we had to add “AFNetworking” separately in the Podfile because the highest available version from Cocoapods was 0.7.0.&lt;/p&gt;
+
+&lt;p&gt;I suspect Cocoapods will gain a lot in popularity in the future, because it makes adding dependencies to projects much easier. As it gains in popularity, more frameworks will become available.&lt;/p&gt;
+
+&lt;p&gt;I suggest you get over to the Cocoapods &lt;a href=&quot;https://github.com/CocoaPods/CocoaPods&quot;&gt;github&lt;/a&gt; and give it a try.&lt;/p&gt;
+
+" />
+
+<!-- twitter -->
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:publisher" content="http://shelley100.github.io" />
+<meta name="twitter:site" content="@akrbd1984" />
+<meta name="twitter:creator" content="Rahamatullah Shelley" />
+<meta name="twitter:title" content="Cocoapods" />
+<meta name="twitter:url" content="http://shelley100.github.io" />
+<meta name="twitter:description" content="&lt;h3 id=&quot;cocoapods&quot;&gt;Cocoapods&lt;/h3&gt;
+&lt;p&gt;In all of our apps, whether they are web-apps or iOS apps, we make extensive use of different frameworks. These help us to save time by abstracting out stuff that’s needed in a lot of different projects.&lt;/p&gt;
+
+&lt;p&gt;We also maintain some of our own frameworks:
+* &lt;a href=&quot;https://github.com/pjaspers/tin&quot;&gt;Tin&lt;/a&gt; Makes consuming webservices in iOS a lot easier.
+* &lt;a href=&quot;https://github.com/pjaspers/coby&quot;&gt;Coby&lt;/a&gt; Adds some functionality we know and love from Ruby into several default Obj-C classes.&lt;/p&gt;
+
+&lt;p&gt;But these frameworks grow together with our projects, so copying these into several projects can become tedious and managing different versions would make things too complicated.&lt;/p&gt;
+
+&lt;p&gt;Ruby has &lt;a href=&quot;http://gembundler.com/&quot;&gt;Bundler&lt;/a&gt; to solve this problem. Just create a gemfile that lists every “gem” you use, Bundler will install these gems and keep track of the versions in the “Gemfile.lock”.&lt;/p&gt;
+
+&lt;p&gt;Now there is a similar system for Cocoa, called &lt;a href=&quot;https://github.com/CocoaPods/CocoaPods&quot;&gt;Cocoapods&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-cocoapods&quot;&gt;Installing cocoapods&lt;/h3&gt;
+&lt;p&gt;Cocoapods runs on macruby, so installing it using RVM is a breeze:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rvm install macruby&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then simply setup cocoapods like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rvm use macruby
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;macgem install cocoapods
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pod setup&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And now we’re ready to start using Cocoapods.&lt;/p&gt;
+
+&lt;h3 id=&quot;adding-cocoapods-to-a-project&quot;&gt;Adding Cocoapods to a project&lt;/h3&gt;
+&lt;p&gt;Using Cocoapods in a new project is quite similar to using Bundler in a rails project.
+We start by adding a Podfile which could look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;platform&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:ios&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;AFnetworking&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git://github.com/AFNetworking/AFNetworking.git&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Tin&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git://github.com/Reprazent/Tin.git&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:commit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;baf1c407f74dd6ca6c6c8c46bc0a3a565e79d3b6&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;coby&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git://github.com/pjaspers/coby.git&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;MagicalRecord&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The platform can either be &lt;code&gt;:ios&lt;/code&gt; or &lt;code&gt;:osx&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note that, just like with Bundler, you can specify a git repository, and even a commit or tag to reference your dependency. This makes it a lot easier to fix versions and avoid breaking the project when updating the dependencies.&lt;/p&gt;
+
+&lt;p&gt;The dependencies referencing a git repository must contain a “.podspec” file. When no repository is specified, Cocoapods looks for the podspec in &lt;a href=&quot;https://github.com/CocoaPods/Specs&quot;&gt;it’s own spec-repository&lt;/a&gt;. There’s already a bunch of frameworks that are available, and more are sure to follow.&lt;/p&gt;
+
+&lt;p&gt;Now we can enable Cocoapods for our project by running &lt;code&gt;pod install&lt;/code&gt; for the first time.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pod install demoproject.xcodeproj&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will clone the git repositories of the pods specified in a new “Pods” directory in your project root.
+Just like Bundler it will create a “Podfile.lock” which holds the references to the current version of the pods and its dependecies. Together with a new workspace we can use to open our project in XCode.
+There we will see that there are actually two projects added to the workspace.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/143q1S3e311O3m1O1X1q/Screen%20Shot%202012-01-05%20at%2021.06.36.png&quot; alt=&quot;screenshot workspace&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;One containing your regular project, and one containing the pods, this makes it easier to view the source code of these pods while working.&lt;/p&gt;
+
+&lt;p&gt;When building your project your pods will be built into “libPods.a” before building the project itself.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/0d2l0S2M2G3W28152F0m/Screen%20Shot%202012-01-05%20at%2021.15.14.png&quot; alt=&quot;screenshot libPods&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now you’re good to go. When adding new pods or updating existing ones in your podfile just run &lt;code&gt;pod install&lt;/code&gt; again to update your “Podfile.lock” and adding or updating the Pods.&lt;/p&gt;
+
+&lt;p&gt;When multiple build configurations are needed, we also need to add these in the “Pods.xcodeproj”.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/0y2L3A0l2e3N3F2u0e2R/Screen%20Shot%202012-01-05%20at%2021.18.30.png&quot; alt=&quot;screenshot build configuration&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You should also set “Skip Install” to yes in your build target in order to create archives for different build types.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://f.cl.ly/items/0i0O3P0o0R1N2w313U1L/Screen%20Shot%202012-01-05%20at%2021.32.44.png&quot; alt=&quot;screenshot skip install&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;thanks &lt;a href=&quot;/author/jelle/&quot;&gt;Verbeeckx&lt;/a&gt; for figuring these last two out&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-your-own-cocoapods&quot;&gt;Creating your own Cocoapods&lt;/h3&gt;
+
+&lt;p&gt;To be able to add our own frameworks into our own projects easily, we had to add a “.podspec” to the repos.
+These podspecs look very similar to the gemspecs in Ruby.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Pod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Tin&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;0.0.1&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;license&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;MIT&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Tin makes the internet easier in Cocoa.&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;homepage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://github.com/pjaspers/Tin&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pjaspers&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;piet@jaspe.rs&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;An optional longer description of Tin.&amp;#39;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:git&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://github.com/pjaspers/Tin.git&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;source_files&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Classes&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s1&quot;&gt;&amp;#39;Classes/**/*.{h,m}&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tin&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s2&quot;&gt;&amp;quot;*.{h,m}&amp;quot;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;JSONKit&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;AFNetworking&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;~&amp;gt; 0.8.0&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In this podspec we set the source, where Cocoapods can find the repository to clone.
+We specify where the required classes can be found within the repository.
+We can also set several dependencies, specifying the tags that should be used.&lt;/p&gt;
+
+&lt;p&gt;Note that adding a dependency like this, it needs to be present in the &lt;a href=&quot;https://github.com/CocoaPods/Specs&quot;&gt;spec repository&lt;/a&gt; of Cocoapods.
+When the correct tag or framework isn’t present in the repo yet, we can add it ourselves in the Podfile of the project we are using the framework in.
+In the case of Tin, we had to add “AFNetworking” separately in the Podfile because the highest available version from Cocoapods was 0.7.0.&lt;/p&gt;
+
+&lt;p&gt;I suspect Cocoapods will gain a lot in popularity in the future, because it makes adding dependencies to projects much easier. As it gains in popularity, more frameworks will become available.&lt;/p&gt;
+
+&lt;p&gt;I suggest you get over to the Cocoapods &lt;a href=&quot;https://github.com/CocoaPods/CocoaPods&quot;&gt;github&lt;/a&gt; and give it a try.&lt;/p&gt;
+
+" />
+<meta name="twitter:image" content="/shelley100assets/images/socialicon120.png" />
+<meta name="twitter:account_id" content="66764321"/>
+
+<!-- Google+ -->
+<meta itemprop="name" content="18 Meta Tags Every Webpage Should Have in 2013"/>
+<meta itemprop="description" content="The definitive guide to Search and Social Meta Tags you should be using in 2013. "/>
+<meta itemprop="audience" content="Marketers"/>
+		<meta itemprop="image" content="http://www.iacquire.com/wp-content/uploads/2013/02/8-29-2013-5-29-14-PM.png"/>
+				<meta itemprop="alternativeHeadline" content="18 Meta Tags For 2013"/>
+
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+</head>
+
+
+  <body>
+<!--
+  
+<script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : 'your-app-id',
+          xfbml      : true,
+          version    : 'v2.3'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+ <script>!function(d,s,id)
+{var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+if(!d.getElementById(id))
+{	js=d.createElement(s);
+	js.id=id;
+	js.src=p+'://platform.twitter.com/widgets.js';
+	fjs.parentNode.insertBefore(js,fjs);
+}
+}(document, 'script', 'twitter-wjs');</script>
+
+  
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+	-->	
+		<div class="container-fluid">  <!-- #1 container -->
+			<div class="row-fluid">
+				<nav class="navbar navbar-inverse">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="/shelley100/" title="Home">Shelley100.com</a>
+							  <small>Shelley's Views and Thoughts</small>
+						</div>  <!-- navbar-header ends -->
+					
+						<ul class="nav navbar-nav">
+							
+									&nbsp;&nbsp;&nbsp;
+									<li><a href="/shelley100/about">About</a></li>
+							  
+									&nbsp;&nbsp;&nbsp;
+									<li><a href="/shelley100/archive">Archive</a></li>
+							  
+									&nbsp;&nbsp;&nbsp;
+									<li><a href="/shelley100/categories">Categories</a></li>
+							  
+									&nbsp;&nbsp;&nbsp;
+									<li><a href="/shelley100/tags">Tags</a></li>
+							  
+									&nbsp;&nbsp;&nbsp;
+									<li><a href="/shelley100/atom.xml">Feed</a></li>
+							  
+									&nbsp;&nbsp;&nbsp;
+									<li><a href="/shelley100/advertisement">Advertisement</a></li>
+							  
+							
+						</ul>
+					</div> <!-- second container-fluid ends -->
+ 
+				</nav>
+			</div>  <!-- first row-fluid ends -->
+		</div> <!-- #1 container ends here -->
+		
+		
+		
+		
+		<div class="container-fluid">  <!-- #2 container starts here-->
+			<div class="row-fluid  no-gutters">
+								<!-- for banner, slot value not required -->
+				
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="col-md-3" style="background-color: cyan;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-Ban-1.png' class='cover-image fix-height' /></a></div><div class="col-md-3" style="background-color: cyan;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-Ban-2.png' class='cover-image fix-height' /></a></div><div class="col-md-3" style="background-color: cyan;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-Ban-3.png' class='cover-image fix-height' /></a></div><div class="col-md-3" style="background-color: cyan;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-Ban-4.png' class='cover-image fix-height' /></a></div>
+
+				
+			</div>	<!-- row-fluid ends -->
+		</div> <!-- #2 container ends here -->
+    
+    
+		<div class="container-fluid">  <!-- #3 container for banner image starts here -->
+			<div class="row-fluid" >
+				<div class="col-md-12" style="background-color: cyan; padding-left: 0px; padding-right: 0px;">
+					
+					<img src="/shelley100/assets/images/banner-thin.gif" class="cover-image" />
+					
+				</div>
+			</div>
+		</div> <!-- #3 container ends here -->
+				
+    <div class="container-fluid">  <!-- #4 container for second nav starts here -->
+		<div class="row-fluid" >
+			<div class="col-md-12 nav-bar">
+				<h4 style="margin-top: 10px">
+					<!--
+					<a href="/shelley100" title="Home">Shelley100.com</a>
+					<small>Shelley's Views and Thoughts</small> -->
+			  
+					 <a href="/shelley100/" title="Home">Home</a>
+			 
+			  
+					  
+							&nbsp;&nbsp;&nbsp;
+							<a href="/shelley100/about">About</a>
+					  
+							&nbsp;&nbsp;&nbsp;
+							<a href="/shelley100/archive">Archive</a>
+					  
+							&nbsp;&nbsp;&nbsp;
+							<a href="/shelley100/categories">Categories</a>
+					  
+							&nbsp;&nbsp;&nbsp;
+							<a href="/shelley100/tags">Tags</a>
+					  
+							&nbsp;&nbsp;&nbsp;
+							<a href="/shelley100/atom.xml">Feed</a>
+					  
+							&nbsp;&nbsp;&nbsp;
+							<a href="/shelley100/advertisement">Advertisement</a>
+					  
+				</h3>
+			</div>	
+		</div>   
+    </div> <!-- #4 container ends here -->
+    
+    <div class="container-fluid">
+    <div class="row-fluid">
+    
+   
+    <div class="col-sm-3" id="col1" style="background-color: #E3E4E5;" >
+    <!--
+    <div class="sidebar leftbar">-->
+     
+	 
+	 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-LHB-1.png' style=height:90px class='cover-image' /></a></div>
+
+     
+     
+<div class="sidebar-sec2">
+	<h3 class="sidebar-sec-header"><u><a style="color: red" href="/shelley100/tags">Tags</a></u></h3>
+	<ul class="sidebar-sec-items tag-items">
+		<span class="site-tag">
+			&nbsp;|&nbsp;
+		
+			
+			
+    <a href="/shelley100/tag-dir/bangladesh"
+        style="font-size: 94%">
+            Bangladesh (1)
+    </a>&nbsp;|&nbsp;
+</span>
+		
+			
+			
+    <a href="/shelley100/tag-dir/any"
+        style="font-size: 94%">
+            any (1)
+    </a>&nbsp;|&nbsp;
+</span>
+		
+			
+			
+    <a href="/shelley100/tag-dir/country"
+        style="font-size: 102%">
+            country (3)
+    </a>&nbsp;|&nbsp;
+</span>
+		 
+	</ul>
+</div>
+
+     
+     
+	 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-LHB-2.png' style=height:90px class='cover-image' /></a></div>
+
+     
+     
+     		
+
+
+
+
+
+<h3 class="sidebar-sec-header"><u><a style="color: red;" href="/shelley100/archive">Archive</a></u></h3>
+
+
+
+  <h4 ><strong><a style="color: red;" href="/shelley100/yearly-archive/2014">2014</a></strong></h4>
+  
+  <table class="table table-bordered">
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2014/10">Oct-2014&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2014/08">Aug-2014&nbsp;(1)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2014/07">Jul-2014&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2014/05">May-2014&nbsp;(3)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2014/01">Jan-2014&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+  </table>
+
+  <h4 ><strong><a style="color: red;" href="/shelley100/yearly-archive/2013">2013</a></strong></h4>
+  
+  <table class="table table-bordered">
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2013/03">Mar-2013&nbsp;(2)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2013/01">Jan-2013&nbsp;(1)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+  </table>
+
+  <h4 ><strong><a style="color: red;" href="/shelley100/yearly-archive/2012">2012</a></strong></h4>
+  
+  <table class="table table-bordered">
+  
+ 
+	
+			
+	
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2012/12">Dec-2012&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2012/09">Sep-2012&nbsp;(3)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2012/08">Aug-2012&nbsp;(2)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2012/07">Jul-2012&nbsp;(1)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2012/06">Jun-2012&nbsp;(2)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2012/05">May-2012&nbsp;(2)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2012/04">Apr-2012&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2012/03">Mar-2012&nbsp;(7)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2012/02">Feb-2012&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2012/01">Jan-2012&nbsp;(4)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+  </table>
+
+  <h4 ><strong><a style="color: red;" href="/shelley100/yearly-archive/2011">2011</a></strong></h4>
+  
+  <table class="table table-bordered">
+  
+ 
+	
+			
+	
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2011/12">Dec-2011&nbsp;(2)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2011/11">Nov-2011&nbsp;(4)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2011/10">Oct-2011&nbsp;(5)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2011/09">Sep-2011&nbsp;(4)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2011/08">Aug-2011&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2011/07">Jul-2011&nbsp;(1)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2011/05">May-2011&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2011/04">Apr-2011&nbsp;(1)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2011/03">Mar-2011&nbsp;(3)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2011/02">Feb-2011&nbsp;(3)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2011/01">Jan-2011&nbsp;(3)</a>
+    
+		</td>
+		
+    		
+    
+  
+  </table>
+
+  <h4 ><strong><a style="color: red;" href="/shelley100/yearly-archive/2010">2010</a></strong></h4>
+  
+  <table class="table table-bordered">
+  
+ 
+	
+			
+	
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2010/12">Dec-2010&nbsp;(2)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2010/10">Oct-2010&nbsp;(2)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2010/08">Aug-2010&nbsp;(4)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2010/07">Jul-2010&nbsp;(1)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2010/06">Jun-2010&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2010/04">Apr-2010&nbsp;(3)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2010/03">Mar-2010&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2010/02">Feb-2010&nbsp;(3)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+  </table>
+
+  <h4 ><strong><a style="color: red;" href="/shelley100/yearly-archive/2009">2009</a></strong></h4>
+  
+  <table class="table table-bordered">
+  
+ 
+	
+			
+	
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2009/12">Dec-2009&nbsp;(2)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2009/11">Nov-2009&nbsp;(2)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2009/10">Oct-2009&nbsp;(3)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2009/09">Sep-2009&nbsp;(2)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2009/08">Aug-2009&nbsp;(3)</a>
+    
+		</td>
+		
+    		
+    
+  
+ 
+	
+			
+		
+	
+		<td>
+			
+    
+    <a href="/shelley100/monthly-archive/2009/06">Jun-2009&nbsp;(5)</a>
+    
+		</td></tr>
+		
+			
+    
+  
+ 
+	
+			
+		
+	
+		<tr><td>
+    		
+    
+    <a href="/shelley100/monthly-archive/2009/05">May-2009&nbsp;(1)</a>
+    
+		</td>
+		
+    		
+    
+  
+  </table>
+
+
+     
+     
+	 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-LHB-3.png' style=height:90px class='cover-image' /></a></div>
+
+	 
+	 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-LHB-4.png' style=height:90px class='cover-image' /></a></div>
+
+     
+     </div>
+    <div class="col-sm-6" id="col2" style="background-color: lightgray;">  
+    <!--
+    
+    <div class="container content">-->
+      <!--
+      <header class="masthead">
+        
+        <h3 class="masthead-title">
+          <a href="/shelley100" title="Home">Shelley100.com</a>
+          <small>Shelley's Views and Thoughts</small>
+          
+          
+          
+				&nbsp;&nbsp;&nbsp;
+				<small><a href="about">About</a></small>
+		  
+				&nbsp;&nbsp;&nbsp;
+				<small><a href="archive">Archive</a></small>
+		  
+				&nbsp;&nbsp;&nbsp;
+				<small><a href="categories">Categories</a></small>
+		  
+				&nbsp;&nbsp;&nbsp;
+				<small><a href="tags">Tags</a></small>
+		  
+				&nbsp;&nbsp;&nbsp;
+				<small><a href="atom.xml">Feed</a></small>
+		  
+				&nbsp;&nbsp;&nbsp;
+				<small><a href="advertisement">Advertisement</a></small>
+		  
+        </h3>
+      </header> -->
+
+      <main>
+        <article class="post">
+  
+  <h1 class="post-title">Cocoapods</h1>
+  <p class="author-name">by <strong>Rahamatullah Shelley</strong>&nbsp;<small>(Published:
+  <time datetime="2012-01-30T00:00:00+06:00" class="page-date">30 Jan 2012</time>)</small></p>
+  <p>
+	  	
+
+
+	
+	
+
+	
+		
+		
+		<span><strong><u>Category:</u></strong>&nbsp;
+	
+	
+	
+				
+		
+				
+				<span><a href="/shelley100/cat-dir/cocoa">cocoa</a></span>
+			
+		
+			
+			
+  </span>
+
+	  	
+
+
+	
+	
+
+
+	
+		
+		<span><strong><u>Tag:</u></strong>&nbsp;
+	
+		
+	
+			<span>none</span>	
+		
+			
+		
+  </span>
+
+  </p>  
+  
+  <br />
+  <h3 id="cocoapods">Cocoapods</h3>
+<p>In all of our apps, whether they are web-apps or iOS apps, we make extensive use of different frameworks. These help us to save time by abstracting out stuff that’s needed in a lot of different projects.</p>
+
+<p>We also maintain some of our own frameworks:
+* <a href="https://github.com/pjaspers/tin">Tin</a> Makes consuming webservices in iOS a lot easier.
+* <a href="https://github.com/pjaspers/coby">Coby</a> Adds some functionality we know and love from Ruby into several default Obj-C classes.</p>
+
+<p>But these frameworks grow together with our projects, so copying these into several projects can become tedious and managing different versions would make things too complicated.</p>
+
+<p>Ruby has <a href="http://gembundler.com/">Bundler</a> to solve this problem. Just create a gemfile that lists every “gem” you use, Bundler will install these gems and keep track of the versions in the “Gemfile.lock”.</p>
+
+<p>Now there is a similar system for Cocoa, called <a href="https://github.com/CocoaPods/CocoaPods">Cocoapods</a>.</p>
+
+<h3 id="installing-cocoapods">Installing cocoapods</h3>
+<p>Cocoapods runs on macruby, so installing it using RVM is a breeze:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>rvm install macruby</code></pre></div>
+
+<p>Then simply setup cocoapods like this:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>rvm use macruby
+<span class="nv">$ </span>macgem install cocoapods
+<span class="nv">$ </span>pod setup</code></pre></div>
+
+<p>And now we’re ready to start using Cocoapods.</p>
+
+<h3 id="adding-cocoapods-to-a-project">Adding Cocoapods to a project</h3>
+<p>Using Cocoapods in a new project is quite similar to using Bundler in a rails project.
+We start by adding a Podfile which could look like this:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">platform</span> <span class="ss">:ios</span>
+
+<span class="n">dependency</span> <span class="s2">&quot;AFnetworking&quot;</span><span class="p">,</span>
+  <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;git://github.com/AFNetworking/AFNetworking.git&quot;</span>
+
+<span class="n">dependency</span> <span class="s1">&#39;Tin&#39;</span><span class="p">,</span>
+  <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;git://github.com/Reprazent/Tin.git&quot;</span><span class="p">,</span>
+  <span class="ss">:commit</span> <span class="o">=&gt;</span> <span class="s2">&quot;baf1c407f74dd6ca6c6c8c46bc0a3a565e79d3b6&quot;</span>
+
+<span class="n">dependency</span> <span class="s1">&#39;coby&#39;</span><span class="p">,</span>
+  <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s2">&quot;git://github.com/pjaspers/coby.git&quot;</span>
+
+<span class="n">dependency</span> <span class="s2">&quot;MagicalRecord&quot;</span></code></pre></div>
+
+<p>The platform can either be <code>:ios</code> or <code>:osx</code>.</p>
+
+<p>Note that, just like with Bundler, you can specify a git repository, and even a commit or tag to reference your dependency. This makes it a lot easier to fix versions and avoid breaking the project when updating the dependencies.</p>
+
+<p>The dependencies referencing a git repository must contain a “.podspec” file. When no repository is specified, Cocoapods looks for the podspec in <a href="https://github.com/CocoaPods/Specs">it’s own spec-repository</a>. There’s already a bunch of frameworks that are available, and more are sure to follow.</p>
+
+<p>Now we can enable Cocoapods for our project by running <code>pod install</code> for the first time.</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>pod install demoproject.xcodeproj</code></pre></div>
+
+<p>This will clone the git repositories of the pods specified in a new “Pods” directory in your project root.
+Just like Bundler it will create a “Podfile.lock” which holds the references to the current version of the pods and its dependecies. Together with a new workspace we can use to open our project in XCode.
+There we will see that there are actually two projects added to the workspace.</p>
+
+<p><img src="http://f.cl.ly/items/143q1S3e311O3m1O1X1q/Screen%20Shot%202012-01-05%20at%2021.06.36.png" alt="screenshot workspace" /></p>
+
+<p>One containing your regular project, and one containing the pods, this makes it easier to view the source code of these pods while working.</p>
+
+<p>When building your project your pods will be built into “libPods.a” before building the project itself.</p>
+
+<p><img src="http://f.cl.ly/items/0d2l0S2M2G3W28152F0m/Screen%20Shot%202012-01-05%20at%2021.15.14.png" alt="screenshot libPods" /></p>
+
+<p>Now you’re good to go. When adding new pods or updating existing ones in your podfile just run <code>pod install</code> again to update your “Podfile.lock” and adding or updating the Pods.</p>
+
+<p>When multiple build configurations are needed, we also need to add these in the “Pods.xcodeproj”.</p>
+
+<p><img src="http://f.cl.ly/items/0y2L3A0l2e3N3F2u0e2R/Screen%20Shot%202012-01-05%20at%2021.18.30.png" alt="screenshot build configuration" /></p>
+
+<p>You should also set “Skip Install” to yes in your build target in order to create archives for different build types.</p>
+
+<p><img src="http://f.cl.ly/items/0i0O3P0o0R1N2w313U1L/Screen%20Shot%202012-01-05%20at%2021.32.44.png" alt="screenshot skip install" /></p>
+
+<p><em>thanks <a href="/author/jelle/">Verbeeckx</a> for figuring these last two out</em></p>
+
+<h3 id="creating-your-own-cocoapods">Creating your own Cocoapods</h3>
+
+<p>To be able to add our own frameworks into our own projects easily, we had to add a “.podspec” to the repos.
+These podspecs look very similar to the gemspecs in Ruby.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Pod</span><span class="o">::</span><span class="no">Spec</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">name</span>     <span class="o">=</span> <span class="s1">&#39;Tin&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">version</span>  <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">license</span>  <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">summary</span>  <span class="o">=</span> <span class="s1">&#39;Tin makes the internet easier in Cocoa.&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">homepage</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/pjaspers/Tin&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">author</span>   <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;pjaspers&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;piet@jaspe.rs&#39;</span> <span class="p">}</span>
+
+  <span class="n">s</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;An optional longer description of Tin.&#39;</span>
+
+  <span class="n">s</span><span class="o">.</span><span class="n">source</span>   <span class="o">=</span> <span class="p">{</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://github.com/pjaspers/Tin.git&#39;</span> <span class="p">}</span>
+
+  <span class="n">s</span><span class="o">.</span><span class="n">source_files</span> <span class="o">=</span> <span class="s1">&#39;Classes&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Classes/**/*.{h,m}&#39;</span><span class="p">,</span>
+                   <span class="s2">&quot;Tin&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;*.{h,m}&quot;</span>
+
+  <span class="n">s</span><span class="o">.</span><span class="n">dependency</span> <span class="s1">&#39;JSONKit&#39;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">dependency</span> <span class="s2">&quot;AFNetworking&quot;</span><span class="p">,</span> <span class="s2">&quot;~&gt; 0.8.0&quot;</span>
+<span class="k">end</span></code></pre></div>
+
+<p>In this podspec we set the source, where Cocoapods can find the repository to clone.
+We specify where the required classes can be found within the repository.
+We can also set several dependencies, specifying the tags that should be used.</p>
+
+<p>Note that adding a dependency like this, it needs to be present in the <a href="https://github.com/CocoaPods/Specs">spec repository</a> of Cocoapods.
+When the correct tag or framework isn’t present in the repo yet, we can add it ourselves in the Podfile of the project we are using the framework in.
+In the case of Tin, we had to add “AFNetworking” separately in the Podfile because the highest available version from Cocoapods was 0.7.0.</p>
+
+<p>I suspect Cocoapods will gain a lot in popularity in the future, because it makes adding dependencies to projects much easier. As it gains in popularity, more frameworks will become available.</p>
+
+<p>I suggest you get over to the Cocoapods <a href="https://github.com/CocoaPods/CocoaPods">github</a> and give it a try.</p>
+
+  
+</article>
+<hr />
+<section class="pager">
+  <ul>
+    
+    <li class="previous"><a href="/shelley100/cocoa/2012/01/27/creating-a-quick-look-plugin/" title="Creating a Quick Look plugin"><span class="glyphicon glyphicon-arrow-left"></span> Previous</a></li>
+    
+    
+    <li class="next"><a href="/shelley100/general/2012/02/21/gpxreader/" title="GPX Reader">Next <span class="glyphicon glyphicon-arrow-right"></span></a></li>
+    
+  </ul>
+</section>
+
+<hr />
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/shelley100/general/2014/10/24/we-ve-moved/">
+            We've moved
+            <small><time datetime="2014-10-24T00:00:00+06:00">24 Oct 2014</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/shelley100/portfolio/2014/08/26/wolvenberg-mobile-sales-app/">
+            Wolvenberg mobile sales app
+            <small><time datetime="2014-08-26T00:00:00+06:00">26 Aug 2014</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/shelley100/general/2014/07/29/epi-use/">
+            10to1 acquired by international software developer EPI-USE
+            <small><time datetime="2014-07-29T00:00:00+06:00">29 Jul 2014</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+<hr />
+<h3>Share this Article:</h3>
+
+
+
+
+
+    
+    
+
+<hr />
+
+<h4>Share This Post:</h4>
+<div class="social-share"> 
+    <a class="social-share-element social-twitter popup" href="https://twitter.com/intent/tweet?text=Cocoapods&url=http://shelley100.github.io/cocoa/2012/01/30/cocoapods/&via=akrbd1984&hashtags=" title="Share this post on Twitter"></a>
+    <a class="social-share-element social-facebook popup" href="https://www.facebook.com/sharer/sharer.php?t=Cocoapods&u=http://shelley100.github.io/cocoa/2012/01/30/cocoapods/" title="Share this post on Facebook"></a>
+    <a class="social-share-element social-google popup" href="https://plus.google.com/share?url=http://shelley100.github.io/cocoa/2012/01/30/cocoapods/" title="Share this post on Google Plus"></a>
+    <a class="social-share-element social-linkedin popup" href="http://www.linkedin.com/shareArticle?mini=true&title=Cocoapods&url=http://shelley100.github.io/cocoa/2012/01/30/cocoapods/&source=http%3a%2f%2fzhangwenli.com" title="Share this post on LinkedIn"></a>
+
+</div>
+
+<script>
+  $('.popup').click(function(event) {
+    var width  = 575,
+        height = 400,
+        left   = ($(window).width()  - width)  / 2,
+        top    = ($(window).height() - height) / 2,
+        url    = this.href,
+        opts   = 'status=1' +
+                 ',width='  + width  +
+                 ',height=' + height +
+                 ',top='    + top    +
+                 ',left='   + left;
+    
+    window.open(url, 'twitter', opts);
+ 
+    return false;
+  });
+</script>
+
+<hr />
+<!--
+<div id="disqus_thread"></div>
+
+<script type="text/javascript">
+
+  var disqus_developer = 1;
+
+var disqus_shortname ='freshman21';
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+      </main>
+     </div>
+     
+    <div class="col-sm-3" id="col3" style="background-color:#E3E4E5" >
+    <!-- <div class="sidebar rightbar"> -->
+		 
+		 
+		 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-RHB-1.png' style=height:90px class='cover-image' /></a></div>
+
+		 
+		 <div id="fb-root" style="margin-top:20px;"></div>
+
+<ul class="post-share ulno mob">
+
+<!-- Twitter -->
+<a class="btn btn-primary btn-md" href="https://twitter.com/akrbd1984" style="padding-right:50px"><img src="/shelley100assets/images/Twitter_logo_white.png" width='20px' height='20px' />&nbsp;&nbsp;Follow @akrbd1984</a></li>
+//<a href="https://twitter.com/TvEkattor"><img src="images/twitter.png " style="padding-right:50px"></a>
+<!-- Google+ -->
+<li class="gp"><div class="g-follow" data-href="https://plus.google.com/akrbd1984" data-height="24" data-annotation="none" data-rel="author"></div>
+
+<!-- Facebook -->
+<li class="fb"><div class="fb-like" data-href="http://shelley100.github.io" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div></li>
+
+</ul>
+
+		 
+		 
+		 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-RHB-2.png' style=height:90px class='cover-image' /></a></div>
+
+		 
+		 
+
+<div class="sidebar-sec2">
+	<!-- <p class="h4 sidebar-sec-header2"><u><strong>Categories</strong></u></p> -->
+	<h3 class="sidebar-sec-header"><u><a style="color: red" href="/shelley100/categories">Categories</a></u></h3>
+	<ul class="sidebar-sec-items">
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/cocoa">
+					cocoa
+					<span class="badge">
+						10
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/general">
+					general
+					<span class="badge">
+						44
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/portfolio">
+					portfolio
+					<span class="badge">
+						16
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/press-releases">
+					press-releases
+					<span class="badge">
+						1
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/rails">
+					rails
+					<span class="badge">
+						17
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/ruby">
+					ruby
+					<span class="badge">
+						4
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/team">
+					team
+					<span class="badge">
+						5
+					</span>
+				</a>
+			</li>
+		 
+	</ul>
+</div>
+
+		 
+		 
+		 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-RHB-3.png' style=height:90px class='cover-image' /></a></div>
+
+		 
+		 <div class="sidebar-sec2">
+	<!-- <p class="h4 sidebar-sec-header"><strong><u>Recent Posts</u></strong></p> -->
+	<h3 class="sidebar-sec-header"><u>Recent Posts</u></h3>
+	<ul class="sidebar-sec-items" >
+    
+         
+        <li class="sidebar-sec-item">
+            24 Oct 2014 &raquo; <a href="/shelley100/general/2014/10/24/we-ve-moved/">We've moved</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            26 Aug 2014 &raquo; <a href="/shelley100/portfolio/2014/08/26/wolvenberg-mobile-sales-app/">Wolvenberg mobile sales app</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            29 Jul 2014 &raquo; <a href="/shelley100/general/2014/07/29/epi-use/">10to1 acquired by international software developer EPI-USE</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            26 May 2014 &raquo; <a href="/shelley100/general/2014/05/26/android-developer/">Job – Getalenteerde Android developer (m/v)</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            22 May 2014 &raquo; <a href="/shelley100/general/2014/05/22/ror-developer/">Job – Enthousiaste Ruby on Rails developer (m/v)</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            21 May 2014 &raquo; <a href="/shelley100/general/2014/05/21/ios-developer/">Job – Gepassioneerde iOS developer (m/v)</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            05 Jan 2014 &raquo; <a href="/shelley100/general/2014/01/05/hi-phone/">Hi Phone</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            27 Mar 2013 &raquo; <a href="/shelley100/general/2013/03/27/business-developer-gezocht/">Business developer gezocht</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            12 Mar 2013 &raquo; <a href="/shelley100/general/2013/03/12/tech-talks/">Tech Talks</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            22 Jan 2013 &raquo; <a href="/shelley100/general/2013/01/22/iom/">Iom</a>
+        </li>
+     
+	</ul>
+</div>
+
+		 
+		 
+		 
+				
+					
+					
+				
+				
+						
+				
+								
+				<div class="sidebar-sec" style="background-color: green;"><a href='/shelley100/advertisement'><img src='/shelley100/assets/ad-images/Post-RHB-4.png' style=height:90px class='cover-image' /></a></div>
+
+		 
+		 
+		
+     </div>
+    
+     </div></div>
+     
+     
+      <footer class="footer">
+      <div class="container-fluid" style="background-color: black;">  <!-- #container for footer -->
+		<div class="row-fluid" >
+			<div class="col-md-2" id="col-footer-1">
+				<h3><u>Site Links</u></h3>
+<ul>
+	<li><a href="/shelley100/" title="Home">Home</a></li>
+	
+	  
+			
+			<li><a href="/shelley100/about">About</a></li>
+	  
+			
+			<li><a href="/shelley100/archive">Archive</a></li>
+	  
+			
+			<li><a href="/shelley100/categories">Categories</a></li>
+	  
+			
+			<li><a href="/shelley100/tags">Tags</a></li>
+	  
+			
+			<li><a href="/shelley100/atom.xml">Feed</a></li>
+	  
+			
+			<li><a href="/shelley100/advertisement">Advertisement</a></li>
+	  
+</ul>
+
+			</div>	
+			
+			<div class="col-md-2" id="col-footer-1">
+				
+
+<div class="sidebar-sec2">
+	<!-- <p class="h4 sidebar-sec-header2"><u><strong>Categories</strong></u></p> -->
+	<h3 class="sidebar-sec-header"><u><a style="color: red" href="/shelley100/categories">Categories</a></u></h3>
+	<ul class="sidebar-sec-items">
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/cocoa">
+					cocoa
+					<span class="badge">
+						10
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/general">
+					general
+					<span class="badge">
+						44
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/portfolio">
+					portfolio
+					<span class="badge">
+						16
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/press-releases">
+					press-releases
+					<span class="badge">
+						1
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/rails">
+					rails
+					<span class="badge">
+						17
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/ruby">
+					ruby
+					<span class="badge">
+						4
+					</span>
+				</a>
+			</li>
+		
+			
+			<li class="sidebar-sec-item">
+				<a href="/shelley100/cat-dir/team">
+					team
+					<span class="badge">
+						5
+					</span>
+				</a>
+			</li>
+		 
+	</ul>
+</div>
+
+			</div>	
+			
+			<div class="col-md-3" id="col-footer-2">
+				<div class="sidebar-sec2">
+	<!-- <p class="h4 sidebar-sec-header"><strong><u>Recent Posts</u></strong></p> -->
+	<h3 class="sidebar-sec-header"><u>Recent Posts</u></h3>
+	<ul class="sidebar-sec-items" >
+    
+         
+        <li class="sidebar-sec-item">
+            24 Oct 2014 &raquo; <a href="/shelley100/general/2014/10/24/we-ve-moved/">We've moved</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            26 Aug 2014 &raquo; <a href="/shelley100/portfolio/2014/08/26/wolvenberg-mobile-sales-app/">Wolvenberg mobile sales app</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            29 Jul 2014 &raquo; <a href="/shelley100/general/2014/07/29/epi-use/">10to1 acquired by international software developer EPI-USE</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            26 May 2014 &raquo; <a href="/shelley100/general/2014/05/26/android-developer/">Job – Getalenteerde Android developer (m/v)</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            22 May 2014 &raquo; <a href="/shelley100/general/2014/05/22/ror-developer/">Job – Enthousiaste Ruby on Rails developer (m/v)</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            21 May 2014 &raquo; <a href="/shelley100/general/2014/05/21/ios-developer/">Job – Gepassioneerde iOS developer (m/v)</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            05 Jan 2014 &raquo; <a href="/shelley100/general/2014/01/05/hi-phone/">Hi Phone</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            27 Mar 2013 &raquo; <a href="/shelley100/general/2013/03/27/business-developer-gezocht/">Business developer gezocht</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            12 Mar 2013 &raquo; <a href="/shelley100/general/2013/03/12/tech-talks/">Tech Talks</a>
+        </li>
+    
+         
+        <li class="sidebar-sec-item">
+            22 Jan 2013 &raquo; <a href="/shelley100/general/2013/01/22/iom/">Iom</a>
+        </li>
+     
+	</ul>
+</div>
+
+			</div>
+			<div class="col-md-3" id="col-footer-3">
+						
+
+
+
+
+
+<h3 class="sidebar-sec-header"><u><a style="color: red" href="/shelley100/archive">Archive</a></u></h3>
+
+
+  <h4 ><strong><a href="/shelley100/yearly-archive/2014">2014</a></strong></h4>
+  <ul>
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2014/10">Oct-2014&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2014/08">Aug-2014&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2014/07">Jul-2014&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2014/05">May-2014&nbsp;(3)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2014/01">Jan-2014&nbsp;(1)</a></li>
+    
+    
+  
+  </ul>
+
+  <h4 ><strong><a href="/shelley100/yearly-archive/2013">2013</a></strong></h4>
+  <ul>
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2013/03">Mar-2013&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2013/01">Jan-2013&nbsp;(1)</a></li>
+    
+    
+  
+  </ul>
+
+  <h4 ><strong><a href="/shelley100/yearly-archive/2012">2012</a></strong></h4>
+  <ul>
+  
+ 
+	
+			
+	
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/12">Dec-2012&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/09">Sep-2012&nbsp;(3)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/08">Aug-2012&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/07">Jul-2012&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/06">Jun-2012&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/05">May-2012&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/04">Apr-2012&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/03">Mar-2012&nbsp;(7)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/02">Feb-2012&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2012/01">Jan-2012&nbsp;(4)</a></li>
+    
+    
+  
+  </ul>
+
+  <h4 ><strong><a href="/shelley100/yearly-archive/2011">2011</a></strong></h4>
+  <ul>
+  
+ 
+	
+			
+	
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/12">Dec-2011&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/11">Nov-2011&nbsp;(4)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/10">Oct-2011&nbsp;(5)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/09">Sep-2011&nbsp;(4)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/08">Aug-2011&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/07">Jul-2011&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/05">May-2011&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/04">Apr-2011&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/03">Mar-2011&nbsp;(3)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/02">Feb-2011&nbsp;(3)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2011/01">Jan-2011&nbsp;(3)</a></li>
+    
+    
+  
+  </ul>
+
+  <h4 ><strong><a href="/shelley100/yearly-archive/2010">2010</a></strong></h4>
+  <ul>
+  
+ 
+	
+			
+	
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/12">Dec-2010&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/10">Oct-2010&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/08">Aug-2010&nbsp;(4)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/07">Jul-2010&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/06">Jun-2010&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/04">Apr-2010&nbsp;(3)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/03">Mar-2010&nbsp;(1)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2010/02">Feb-2010&nbsp;(3)</a></li>
+    
+    
+  
+  </ul>
+
+  <h4 ><strong><a href="/shelley100/yearly-archive/2009">2009</a></strong></h4>
+  <ul>
+  
+ 
+	
+			
+	
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2009/12">Dec-2009&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2009/11">Nov-2009&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2009/10">Oct-2009&nbsp;(3)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2009/09">Sep-2009&nbsp;(2)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2009/08">Aug-2009&nbsp;(3)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2009/06">Jun-2009&nbsp;(5)</a></li>
+    
+    
+  
+ 
+	
+			
+		
+
+    
+    <li style="display: inline"><a href="/shelley100/monthly-archive/2009/05">May-2009&nbsp;(1)</a></li>
+    
+    
+  
+  </ul>
+
+
+
+			</div>	
+			
+			<div class="col-md-2" id="col-footer-4">
+				
+<div class="sidebar-sec2">
+	<h3 class="sidebar-sec-header"><u><a style="color: red" href="/shelley100/tags">Tags</a></u></h3>
+	<ul class="sidebar-sec-items tag-items">
+		<span class="site-tag">
+			&nbsp;|&nbsp;
+		
+			
+			
+    <a href="/shelley100/tag-dir/bangladesh"
+        style="font-size: 94%">
+            Bangladesh (1)
+    </a>&nbsp;|&nbsp;
+</span>
+		
+			
+			
+    <a href="/shelley100/tag-dir/any"
+        style="font-size: 94%">
+            any (1)
+    </a>&nbsp;|&nbsp;
+</span>
+		
+			
+			
+    <a href="/shelley100/tag-dir/country"
+        style="font-size: 102%">
+            country (3)
+    </a>&nbsp;|&nbsp;
+</span>
+		 
+	</ul>
+</div>
+
+			</div>	
+		</div>
+</div>		
+  
+        
+        
+        <small>
+          &copy; <time datetime="2015-04-23T23:58:31+06:00">2015</time>. All rights reserved.
+        </small>
+      </footer>
+    
+</div>
+</div>  <!-- end of container-fluid -->  
+  </body>
+</html>

@@ -1,6 +1,0 @@
----
-layout: default
-title: জাতীয় সমস্যা
-category: [general, portfolio]
----
-আমাদের সকলের একই সমস্যা হচ্ছে ।
